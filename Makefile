@@ -10,18 +10,22 @@ BLUE  = \033[1;34m
 RED   = \033[1;31m
 RESET = \033[0m
 
-.PHONY: all install run clean re
+VENV = .venv
+PIP = $(VENV)/bin/pip
+RUN_CMD = $(VENV)/bin/run
 
 all: install
 
 install:
+	@printf "$(BLUE)▶ Creating virtual environment...$(RESET)\n"
+	python3 -m venv $(VENV)
 	@printf "$(BLUE)▶ Installing project in development mode...$(RESET)\n"
-	pip install -e .
+	$(PIP) install -e .
 	@printf "$(GREEN)✔ Project installed successfully!$(RESET)\n"
 
 run:
 	@printf "$(GREEN)▶ Starting simulation...$(RESET)\n"
-	run
+	$(RUN_CMD)
 
 clean:
 	@printf "$(RED)▶ Cleaning Python temporary files...$(RESET)\n"
@@ -30,6 +34,9 @@ clean:
 	@rm -rf *.egg-info
 	@rm -rf build/ dist/
 	@rm -rf .pytest_cache
+	@rm -rf $(VENV)
 	@printf "$(GREEN)✔ Cleanup complete!$(RESET)\n"
 
 re: clean all
+
+.PHONY: all install run clean re

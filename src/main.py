@@ -18,15 +18,18 @@ def main ():
     POPULATION = 10
     WIDTH = 600
     HEIGH = 600
+    clock = pygame.time.Clock()
+    windows = init_interface(WIDTH, HEIGH)
     
-    init_interface(WIDTH, HEIGH)
+    clock.tick(60)
     while 1:
-        i = 0
-    pygame.QUIT
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return pygame.quit()
  
 def init_interface(pWidth, pHeight):
     pygame.init()
-    pygame.display.set_mode((pWidth, pHeight))
+    return pygame.display.set_mode((pWidth, pHeight))
 
 if __name__ == "__main__":
     main()
