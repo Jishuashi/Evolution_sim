@@ -6,9 +6,10 @@
  # @ Description:
  '''
 
-import pygame
+import pygame, math, random
 from src.Point import Point
 from pygame.surface import Surface
+from src.const import *
 
 class Villager:
     def __init__(self, pPos : Point, pColor : tuple, pSize : float):
@@ -18,6 +19,7 @@ class Villager:
         self._alive : bool = True
         self._energy : float = (300.0 * self._size)
         self._speed : float = (1.0 / self._size)
+        self._angle : float = random.uniform(0, 2*math.pi)
         
     def drawVillager(self, pWin : Surface):
         if (self._alive):
@@ -26,17 +28,35 @@ class Villager:
     def getPos(self) -> Point:
         return self._pos
     
-    def setPos(self, pPos):
+    def setPos(self, pPos: Point):
         self._pos = pPos
         
     def getColor(self)  -> tuple:
         return self._color
     
-    def setColor(self, pColor):
+    def setColor(self, pColor : tuple):
         self._color = pColor
+       
+    def move(self, pAngle : int):
+        posX = self._pos.getX()
+        posY = self._pos.getY()
         
+        newPosX = posX + (math.cos(pAngle) * self._speed)
+        newPosY = posY + (math.sin(pAngle) * self._speed)
+        
+        if (newPosX >= WIDTH):
+            newPosX = WIDTH
+        elif (newPosX <= 0):
+            newPosX = 0
+        if (newPosY >= HEIGH):
+            newPosY = HEIGH
+        elif (newPosY <= 0):
+            newPosY = 0
+        self._pos.setPoint(newPosX, newPosY)
+
     def update(self):
         if (self._alive):
-            self._energy -= 1
+            self.move(self._angle)
+            self._energy -= 1 * self._size
         if(self._energy <= 0):
             self._alive = False

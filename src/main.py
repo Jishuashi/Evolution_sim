@@ -7,6 +7,7 @@
  '''
  
 import os, warnings
+from src.const import *
 from src.Point import Point
 from src.Villager import Villager
 from src.Carrot import Carrot
@@ -20,9 +21,6 @@ warnings.filterwarnings("ignore", category=RuntimeWarning)
 import pygame, random
 
 def main ():
-    POPULATION : int = 10
-    WIDTH : int = 1200
-    HEIGH : int = 800
     clock : Clock = Clock()
     win : Surface
     villagers : list[Villager]
@@ -47,8 +45,6 @@ def main ():
         pygame.display.flip()
  
 def init_interface(pWidth : int, pHeight: int, pPopulation : int):
-    MAX_SIZE : float = 2.0
-    MIN_SIZE : float = 0.5
     villagers: list[Villager] = [] 
     carrots: list[Carrot] = []
     offset : int = 150
