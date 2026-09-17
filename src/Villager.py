@@ -11,12 +11,17 @@ from src.Point import Point
 from pygame.surface import Surface
 
 class Villager:
-    def __init__(self, pPos : Point, pColor : tuple):
+    def __init__(self, pPos : Point, pColor : tuple, pSize : float):
         self._pos : Point = pPos
         self._color : tuple = pColor
+        self._size : float = pSize
+        self._alive : bool = True
+        self._energy : float = (300.0 * self._size)
+        self._speed : float = (1.0 / self._size)
         
     def drawVillager(self, pWin : Surface):
-        pygame.draw.circle(pWin, self._color, self._pos.getPoint(), 10)
+        if (self._alive):
+            pygame.draw.circle(pWin, self._color, self._pos.getPoint(), (8 * self._size))
 
     def getPos(self) -> Point:
         return self._pos
@@ -29,3 +34,9 @@ class Villager:
     
     def setColor(self, pColor):
         self._color = pColor
+        
+    def update(self):
+        if (self._alive):
+            self._energy -= 1
+        if(self._energy <= 0):
+            self._alive = False
