@@ -27,7 +27,8 @@ class Point:
         return self._y
     
     @staticmethod
-    def getRandomPoint(pXMax, pYMax):
-        point = Point(random.randint(0, pXMax), random.randint(0, pYMax))
+    def getRandomPoint(pXMax : int, pYMax: int, pOffset : int):
+        point = Point(random.randint(pOffset, (pXMax - pOffset))
+                    , random.randint(pOffset, (pYMax - pOffset)))
         return point
     

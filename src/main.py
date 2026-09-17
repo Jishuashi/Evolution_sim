@@ -21,8 +21,8 @@ import pygame, random
 
 def main ():
     POPULATION : int = 10
-    WIDTH : int = 1200
-    HEIGH : int = 600
+    WIDTH : int = 1920
+    HEIGH : int = 1080
     clock : Clock = Clock()
     win : Surface
     villagers : list[Villager]
@@ -48,14 +48,16 @@ def main ():
 def init_interface(pWidth : int, pHeight: int, pPopulation : int):
     villagers: list[Villager] = [] 
     carrots: list[Carrot] = []
-    i = 0
-    win = None
+    offset : int = 150
+    i : int = 0
+    win : Surface = None
 
     pygame.init()
     win = pygame.display.set_mode((pWidth, pHeight))
     while i < pPopulation:
-        villagers.append(Villager(Point.getRandomPoint((pWidth - 100), (pHeight - 100)), (100, 200, 100)))
-        carrots.append(Carrot(Point.getRandomPoint((pWidth - 100), (pHeight - 100))))
+        villagers.append(Villager(Point.getRandomPoint(pWidth, pHeight, offset)
+            , (100, 200, 100)))
+        carrots.append(Carrot(Point.getRandomPoint(pWidth, pHeight, offset)))
         i += 1
     return (win, villagers, carrots)
 
