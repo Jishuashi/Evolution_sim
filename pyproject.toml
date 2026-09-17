@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "evolution-simulation"
+version = "0.0.1"
+description = "Learn to create a simple evolution simulation"
+requires-python = ">=3.14"
+dependencies = [
+	"pygame"
+]
+
+[project.optional-dependencies]
+dev = [
+]
+
+[project.scripts]
+run = "src.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
