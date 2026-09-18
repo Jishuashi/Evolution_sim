@@ -56,6 +56,7 @@ class Villager:
 
     def update(self):
         if (self._alive):
+            self._angle += random.uniform(-0.1, 0.1);
             self.move(self._angle)
             self._energy -= 1 * self._size
         if(self._energy <= 0):
