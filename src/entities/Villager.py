@@ -18,14 +18,16 @@ class Villager:
         self._color : tuple = pColor
         self._size : float = pSize
         self._alive : bool = True
-        self._energy : float = (300.0 * self._size)
+        self._energy : float = (INITIAL_ENERGY * math.pow(self._size, ENERGY_SIZE_EXPONENT))
         self._max_energy : int = self._energy
-        self._speed : float = (1.0 / self._size)
+        self._max_speed : int = (INTIAL_SPEED / self._size)
+        self._speed : float = 0
         self._angle : float = random.uniform(0, 2*math.pi)
         
     def drawVillager(self, pWin : Surface) -> None:
         if (self._alive):
-            pygame.draw.circle(pWin, self._color, self._pos.getPoint(), (8 * self._size))
+            pygame.draw.circle(pWin, self._color, self._pos.getPoint()
+                , (INITIAL_VILLAGER_RADIUS * self._size))
 
     def getPos(self) -> Point:
         return self._pos
@@ -42,6 +44,8 @@ class Villager:
     def move(self, pAngle : int) -> None:
         posX = self._pos.getX()
         posY = self._pos.getY()
+        
+        self._speed = random.uniform(0, self._max_speed)
         
         newPosX = posX + (math.cos(pAngle) * self._speed)
         newPosY = posY + (math.sin(pAngle) * self._speed)
@@ -61,12 +65,13 @@ class Villager:
         if (self._alive):
             for carrot in pCarrots:
                   dist = self.getPos().getDistance(carrot.getPos())
-                  if (dist <= ((self._size * 8) + 10) and (not carrot.getIfEated())):
-                      self._energy = min(self._energy + 100, self._max_energy)
+                  if (dist <= ((self._size * INITIAL_VILLAGER_RADIUS) + CARROT_RADIUS)
+                        and (not carrot.getIfEated())):
+                      self._energy = min(self._energy + (INITIAL_ENERGY * 0.1), self._max_energy)
                       carrot.eated()
             self._angle += random.uniform(-0.1, 0.1);
             self.move(self._angle)
-            self._energy -= 1 * self._speed
+            self._energy -= self._size * (METABOLISM_COST + MOVE_COST * self._speed)
 
         if(self._energy <= 0):
             self._alive = False
