@@ -6,14 +6,14 @@
  # @ Description:
  '''
 
-import random
+import random, math
 
 class Point:
     def __init__(self, pX, pY):
         self._x = pX
         self._y = pY
         
-    def getPoint(self):
+    def getPoint(self) -> tuple:
         return (float(self._x), float(self._y)) 
     
     def setPoint(self, pX, pY):
@@ -26,8 +26,12 @@ class Point:
     def getY(self) -> float:
         return self._y
     
+    def getDistance(self, pDest : Point) -> float :
+        return math.sqrt(math.pow((pDest.getX() - self._x), 2) + math.pow((pDest.getY() - self._y), 2))
+    
     @staticmethod
-    def getRandomPoint(pXMax, pYMax):
-        point = Point(random.randint(0, pXMax), random.randint(0, pYMax))
+    def getRandomPoint(pXMax : int, pYMax: int, pOffset : int):
+        point = Point(random.randint(pOffset, (pXMax - pOffset))
+                    , random.randint(pOffset, (pYMax - pOffset)))
         return point
     

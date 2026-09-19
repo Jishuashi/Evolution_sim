@@ -7,9 +7,10 @@
  '''
  
 import os, warnings
-from src.Point import Point
-from src.Villager import Villager
-from src.Carrot import Carrot
+from src.const import *
+from src.entities.Point import Point
+from src.entities.Villager import Villager
+from src.entities.Carrot import Carrot
 from pygame.surface import Surface
 from pygame.time import Clock
 
@@ -20,9 +21,6 @@ warnings.filterwarnings("ignore", category=RuntimeWarning)
 import pygame, random
 
 def main ():
-    POPULATION : int = 10
-    WIDTH : int = 1200
-    HEIGH : int = 600
     clock : Clock = Clock()
     win : Surface
     villagers : list[Villager]
@@ -40,22 +38,25 @@ def main ():
                     return pygame.quit()
         win.fill((0, 0 , 0))
         for villager in villagers:
+            villager.update(carrots)
             villager.drawVillager(win)
         for carrot in carrots:
+            carrot.update()
             carrot.draw_carrot(win)
         pygame.display.flip()
  
 def init_interface(pWidth : int, pHeight: int, pPopulation : int):
     villagers: list[Villager] = [] 
     carrots: list[Carrot] = []
-    i = 0
-    win = None
+    i : int = 0
+    win : Surface = None
 
     pygame.init()
     win = pygame.display.set_mode((pWidth, pHeight))
     while i < pPopulation:
-        villagers.append(Villager(Point.getRandomPoint((pWidth - 100), (pHeight - 100)), (100, 200, 100)))
-        carrots.append(Carrot(Point.getRandomPoint((pWidth - 100), (pHeight - 100))))
+        villagers.append(Villager(Point.getRandomPoint(pWidth, pHeight, OFFSET)
+            , (100, 200, 100), random.uniform(MIN_SIZE, MAX_SIZE)))
+        carrots.append(Carrot(Point.getRandomPoint(pWidth, pHeight, OFFSET)))
         i += 1
     return (win, villagers, carrots)
 
