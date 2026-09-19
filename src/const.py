@@ -11,3 +11,4 @@ WIDTH : int = 1200
 HEIGH : int = 800
 MAX_SIZE : float = 2.0
 MIN_SIZE : float = 0.5
+OFFSET: int = 150
